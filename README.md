@@ -35,53 +35,21 @@ This is a distributed messaging web application built using Flask, FastAPI, MySQ
 ## Installation
 
 ### Prerequisites
-1. **Python 3.10+**
-2. **Docker and Docker Compose**
-3. **Kafka**: Install Kafka and Zookeeper binaries ([instructions](https://kafka.apache.org/quickstart)).
+1. **Docker and Docker Compose**: Ensure both are installed and running on your system.
 
 ### Steps
 1. Clone the repository:
    ```bash
    git clone https://github.com/username/project-name.git
    cd project-name
-   ```
 
-2. Set up a virtual environment:
+
+2. Start the services using Docker Compose:
    ```bash
-   python -m venv venv
-   source venv/bin/activate   # On Windows: venv\Scripts\activate
+   docker-compose up --build
    ```
 
-3. Install Python dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+3. Verify that the services are running:
 
-4. Start Kafka and Zookeeper:
-   ```bash
-   # Navigate to Kafka directory
-   bin/zookeeper-server-start.sh config/zookeeper.properties
-   bin/kafka-server-start.sh config/server.properties
-   ```
-
-5. Start the MySQL server and set up the database:
-   ```sql
-   CREATE DATABASE messaging_app;
-   ```
-
-6. Apply database migrations (if applicable).
-
-7. Start the Flask server:
-   ```bash
-   flask run
-   ```
-
-8. Start the FastAPI server:
-   ```bash
-   uvicorn backend.main:app --reload
-   ```
-
-9. Start the Kafka consumer:
-   ```bash
-   python consumer.py
-   ```
+- **Flask service**: Accessible at [http://localhost:5000](http://localhost:5000).
+- **FastAPI service**: Accessible at [http://localhost:8000](http://localhost:8000).
