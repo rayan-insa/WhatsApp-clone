@@ -1,41 +1,67 @@
 version: '3.8'
 
 services:
-  backend:
-    build: ./backend
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
-      - kafka
-
-  frontend:
-    build: ./frontend
-    ports:
-      - "5000:5000"
-
-  db:
-    image: mysql:8.0
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: whatsapp_clone
-    ports:
-      - "3306:3306"
-
-  kafka:
-    image: confluentinc/cp-kafka:latest
-    environment:
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    depends_on:
-      - zookeeper
-    ports:
-      - "9092:9092"
-
   zookeeper:
-    image: confluentinc/cp-zookeeper:latest
+    image: bitnami/zookeeper:latest
+    container_name: zookeeper
     environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
+      - ALLOW_ANONYMOUS_LOGIN=yes
     ports:
       - "2181:2181"
+
+  kafka:
+    image: bitnami/kafka:latest
+    container_name: kafka
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+  flask:
+    build:
+      context: .
+      dockerfile: Dockerfile-flask
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    depends_on:
+      - kafka
+      - mysql
+    environment:
+      - FLASK_APP=app.py
+      - KAFKA_BROKER=kafka:9092
+      - DB_HOST=mysql
+      - DB_NAME=messaging_app
+      - DB_USER=root
+      - DB_PASSWORD=password
+
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile-fastapi
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - kafka
+      - mysql
+    environment:
+      - KAFKA_BROKER=kafka:9092
+      - DB_HOST=mysql
+      - DB_NAME=messagely
+      - DB_USER=root
+      - DB_PASSWORD=password
+
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: messagely
