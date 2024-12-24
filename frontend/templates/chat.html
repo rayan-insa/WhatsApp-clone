@@ -1,0 +1,63 @@
+<!-- templates/chat.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ chat_name }}</h1>
+
+<div class="chat-container">
+    <!-- Chat Box -->
+    <div class="chat-box-header">
+        <div class="delete-container">
+            <form action="{% if 'groupchat' in request.path %}/groupchat/{{ chat_id }}/delete{% else %}/conversation/{{ chat_id }}/delete{% endif %}" method="post">
+                {% if not 'groupchat' in request.path or is_admin %}
+                <button 
+                    type="submit" 
+                    class="btn btn-danger delete-btn" 
+                    title="Delete {{ 'Groupchat' if 'groupchat' in request.path else 'Conversation' }}"
+                >
+                    Delete {{ 'Groupchat' if 'groupchat' in request.path else 'Conversation' }}
+                </button>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+    <div class="chat-box">
+        {% for message in messages %}
+        <div class="message {{ 'sent' if message['sender_username'] == current_user else 'received' }}">
+            <div class="name">{{ message['sender_username'] }}</div>
+            <div>{{ message['content'] }}</div>
+            <div class="timestamp">{{ message['timestamp'] }}</div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Chat Input -->
+    <div class="chat-input">
+        <form action="{% if 'conversation' in request.path %}/messages/conversation/{{ chat_id }}/send{% else %}/messages/groupchat/{{ chat_id }}/send{% endif %}" method="post">
+            <input type="text" name="message" placeholder="Type a message..." required>
+            <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+    </div>
+
+    <!-- Add Member (Admin Only) -->
+    {% if is_admin %}
+    <div class="add-member">
+        <form action="/groupchat/{{ chat_id }}/add_member" method="post">
+            <input type="text" name="username" placeholder="Enter username to add" required>
+            <button type="submit" class="btn btn-primary">Add Member</button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+    // Check for flashed messages
+    const flashedMessage = "{{ get_flashed_messages()[0] if get_flashed_messages() else '' }}";
+    const messageType = "{{ 'success' if 'success' in get_flashed_messages(category_filter=['success']) else 'error' }}";
+
+    if (flashedMessage) {
+        alert(flashedMessage);
+    }
+</script>
+{% endblock %}

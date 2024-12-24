@@ -1,0 +1,17 @@
+<!-- templates/signin.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Sign In</h1>
+{% if error %}
+<div class="error">{{ error }}</div>
+{% endif %}
+<form id="signin-form" action="/signin" method="post">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" name="username" required>
+        </div>
+        <button type="submit">Sign In</button>
+</form>
+<p>Don't have an account? <a href="{{ url_for('signup_route') }}">Sign Up</a></p>
+{% endblock %}
