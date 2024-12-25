@@ -1,6 +1,6 @@
 import requests
 
-BASE_URL = "http://localhost:8000"
+BASE_URL = "http://backend:8000"
 
 
 def get_conversations():
@@ -15,6 +15,7 @@ def get_conversations_by_user(user_id):
     response = requests.get(f"{BASE_URL}/conversations/{user_id}")
     response.raise_for_status()
     return response.json()
+
 
 def get_groupchats():
     """Fetch all groupchats."""
@@ -37,12 +38,14 @@ def create_conversation(user1_id, user2_id, name):
     response.raise_for_status()
     return response.json()
 
+
 def create_group_chat(admin_id, name):
     """Create a new group chat."""
     payload = {"admin_id": admin_id, "name": name}
     response = requests.post(f"{BASE_URL}/groupchats", json=payload)
     response.raise_for_status()
     return response.json()
+
 
 def add_member_to_group(group_id, user_id):
     """Add a member to a group chat."""
@@ -51,6 +54,7 @@ def add_member_to_group(group_id, user_id):
         f"{BASE_URL}/groupchats/{group_id}/add_member", json=payload
     )
     response.raise_for_status()
+
 
 def signup(username, email):
     """Sign up a new user."""
@@ -107,6 +111,7 @@ def send_groupchat_message(groupchat_id, sender_id, content):
     response.raise_for_status()
     return response.json()
 
+
 def get_user_by_username(username):
     """Fetch a specific user by their username."""
     response = requests.get(f"{BASE_URL}/users/{username}")
@@ -123,6 +128,8 @@ def delete_conversation(conversation_id):
 
 def delete_groupchat(groupchat_id, user_id):
     """Delete a specific group chat."""
-    response = requests.delete(f"{BASE_URL}/groupchats/{groupchat_id}?user_id={user_id}")
+    response = requests.delete(
+        f"{BASE_URL}/groupchats/{groupchat_id}?user_id={user_id}"
+    )
     response.raise_for_status()
     return response.json()

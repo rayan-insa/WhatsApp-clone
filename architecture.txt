@@ -1,0 +1,42 @@
+messagely/
+│
+├── backend/                        # Backend-related files
+│   ├── app/                        # FastAPI application
+│   │   ├── kafka/                  # kafka files
+│   │   │   ├── kafka_consumer.py          
+│   │   │   └── kafka_utils.py
+│   │   ├── models/                 # Database models (e.g., User, Message)
+│   │   │   ├── message.py          
+│   │   │   ├── groupchat.py        
+│   │   │   ├── conversation.py     
+│   │   │   └── user.py             
+│   │   ├── routes/                 # API routes (endpoints)
+│   │   │   ├── conversation_routes.py          
+│   │   │   ├── groupchat_routes.py          
+│   │   │   ├── message.py          
+│   │   │   ├── user_routes.py          
+│   │   │   └── db_routes.py             
+│   │   └── database.py             # Configuration file for database
+│   ├── main.py                     # FastAPI entry point
+│   ├── requirements.txt            # Python dependencies                
+│   └── Dockerfile                  # Dockerfile to build the backend container
+│
+├── frontend/                       # Frontend-related files
+│   ├── static/                     # Static files (CSS, JS)
+│   │   ├── css/                 
+│   │   │   └── style.css 
+│   │   └── js/                 
+│   │       └── chat.js 
+│   ├── templates/                  # HTML files for frontend 
+│   │   ├── base.html                 
+│   │   ├── home.html                
+│   │   ├── chat.html                 
+│   │   ├── signin.html                
+│   │   └── signup.html
+│   ├── utils/                      # utility files                
+│   │   └── api.py         
+│   ├── Dockerfile                  # Dockerfile to build the frontend container                
+│   ├── requirements.txt            # Python dependencies
+│   └── app.py                      # Flask entry point
+├── docker-compose.yml              # Docker Compose configuration to link all services
+└── README.md                       # Project description and setup instructions

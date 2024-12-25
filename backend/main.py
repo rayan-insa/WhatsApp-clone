@@ -18,12 +18,13 @@ from app.kafka.kafka_consumer import *
 app = FastAPI()
 
 
-def run_kafka_consumer():
-    consume_messages()
+# def run_kafka_consumer():
+#     consume_messages()
 
 
 # Run the consumer in a separate thread
-threading.Thread(target=run_kafka_consumer, daemon=True).start()
+# threading.Thread(target=run_kafka_consumer, daemon=True).start()
+
 
 
 # Async function to create tables

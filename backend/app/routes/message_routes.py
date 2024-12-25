@@ -56,7 +56,7 @@ async def create_message(message: MessageCreate, db: AsyncSession = Depends(get_
     }
 
     # Send the message to Kafka
-    send_message_to_kafka(message_data)
+    # send_message_to_kafka(message_data)
     return MessageResponse(
         id=new_message.id,
         content=new_message.content,

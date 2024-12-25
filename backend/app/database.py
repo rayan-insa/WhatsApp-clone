@@ -9,7 +9,7 @@ load_dotenv()  # Load environment variables from the .env file
 # Get password from the .env file
 MYSQLPASSWORD = os.getenv("MYSQLPASSWORD")
 
-DATABASE_URL = f"mysql+asyncmy://root:{MYSQLPASSWORD}@localhost:3306/messagely"
+DATABASE_URL = f"mysql+asyncmy://root:{MYSQLPASSWORD}@mysql:3306/messagely"
 
 # Create the async database engine
 async_engine = create_async_engine(DATABASE_URL, echo=True)
@@ -21,6 +21,7 @@ SessionLocal = sessionmaker(
 
 # Base class for models
 Base = declarative_base()
+
 
 # Dependency to get async DB session
 async def get_db():
