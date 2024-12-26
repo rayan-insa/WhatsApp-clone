@@ -11,20 +11,10 @@ from app.models.message import Message
 from app.routes import groupchat_routes
 from app.routes import db_routes
 from app.routes import conversation_routes
-import threading
-from app.kafka.kafka_consumer import *
+from app.routes import websocket_routes
 
 
 app = FastAPI()
-
-
-# def run_kafka_consumer():
-#     consume_messages()
-
-
-# Run the consumer in a separate thread
-# threading.Thread(target=run_kafka_consumer, daemon=True).start()
-
 
 
 # Async function to create tables
@@ -45,6 +35,7 @@ app.include_router(message_routes.router)
 app.include_router(groupchat_routes.router)
 app.include_router(db_routes.router)
 app.include_router(conversation_routes.router)
+app.include_router(websocket_routes.router)
 
 
 @app.get("/")
