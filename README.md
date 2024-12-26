@@ -1,27 +1,25 @@
-# Messaging Web App with Kafka Integration
+# Messaging Web App
 
-This is a distributed messaging web application built using Flask, FastAPI, MySQL, and Kafka. The application allows users to sign in, sign up, create group chats, send and receive messages, and perform other actions concurrently with multiple users, leveraging Kafka for multithreading and event-driven communication.
+This is a distributed messaging web application built using Flask, FastAPI, MySQL, and WebSockets. The application allows users to sign in, sign up, create group chats, send and receive messages, and perform other actions concurrently with multiple users, leveraging WebSockets for real-time communication.
 
 ---
 
 ## Features
 
-- **User Authentication**: Users can sign in and sign up.
-- **Messaging**: Send and receive messages in private conversations and group chats.
-- **Group Chat Management**: Create, delete (admin-only), and manage members in group chats.
-- **Kafka Integration**: Use Kafka for multithreading and enabling real-time concurrent actions across multiple users.
-- **Scalable Architecture**: Designed for distributed systems using Docker, Flask, FastAPI, and MySQL.
+* **User Authentication**: Users can sign in and sign up.
+* **Messaging**: Send and receive messages in private conversations and group chats.
+* **Group Chat Management**: Create, delete (admin-only), and manage members in group chats.
+* **Real-time Communication**: Utilize WebSockets for instant message delivery and updates.
+* **Scalable Architecture**: Designed for distributed systems using Docker, Flask, FastAPI, and MySQL.
 
 ---
 
 ## Tech Stack
 
 ### Backend:
-- **Flask**: Frontend API.
+- **Flask**: Frontend API and WebSocket server.
 - **FastAPI**: Backend API for handling core business logic.
 - **MySQL**: Database for storing user data, messages, and group chat information.
-- **Kafka**: Event streaming for multithreaded communication.
-- **Confluent Kafka Client**: Python library for interacting with Kafka.
 
 ### Frontend:
 - **HTML, CSS, JavaScript**: For building the user interface.
@@ -35,12 +33,12 @@ This is a distributed messaging web application built using Flask, FastAPI, MySQ
 ## Installation
 
 ### Prerequisites
-1. **Docker and Docker Compose**: Ensure both are installed and running on your system.
+**Docker and Docker Compose**: Ensure both are installed and running on your system.
 
 ### Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/username/project-name.git
+   git clone https://github.com/Samsam19191/WhatsApp-clone.git
    cd project-name
 
 
