@@ -10,10 +10,24 @@ app.secret_key = "very_secret"
 def home():
     if "user_id" not in session:
         return redirect(url_for("signin_route"))
-    conversations = get_conversations_by_user(session["user_id"])
+    user_id = session["user_id"]
+    conversations = get_conversations_by_user(user_id)
+    for conversation in conversations:
+        receiver_id = (
+            conversation["user1_id"]
+            if conversation["user2_id"] == user_id
+            else conversation["user2_id"]
+        )
+        receiver_username = get_user_by_id(receiver_id)["username"]
+        conversation["name"] = (
+            conversation["name"] if conversation["name"] else receiver_username
+        )
     groupchats = get_groupchats_by_user(session["user_id"])
     return render_template(
-        "home.html", conversations=conversations, groupchats=groupchats
+        "home.html",
+        conversations=conversations,
+        groupchats=groupchats,
+        current_user=session["username"],
     )
 
 
@@ -24,10 +38,16 @@ def chat_conversation(conversation_id):
     messages = get_conversation_messages(conversation_id)
     conversations = get_conversations()
     conversation = next((c for c in conversations if c["id"] == conversation_id), None)
+    reciever_id = (
+        conversation["user1_id"]
+        if conversation["user2_id"] == session["user_id"]
+        else conversation["user2_id"]
+    )
+    reciever_username = get_user_by_id(reciever_id)["username"]
     if conversation["name"]:
         chat_name = conversation["name"]
     else:
-        chat_name = f"Conversation {conversation_id}"
+        chat_name = reciever_username
     return render_template(
         "chat.html",
         chat_name=chat_name,
@@ -102,8 +122,6 @@ def signup_route():
 
 @app.route("/signin", methods=["GET", "POST"])
 def signin_route():
-    print(20 * ("__"))
-    print(request.form)
     if request.method == "POST":
         username = request.form["username"]
         try:
@@ -125,8 +143,6 @@ def logout():
 
 @app.route("/conversations/create", methods=["POST"])
 def create_conversation_route():
-    print(20 * ("__"))
-    print(request.form)
     if "user_id" not in session:
         return redirect(url_for("signin_route"))
     try:
@@ -138,7 +154,7 @@ def create_conversation_route():
             error_message = "You cannot create a conversation with yourself."
             flash(error_message)
             return redirect(url_for("home"))
-        name = request.form.get("name", "").strip() or None
+        name = request.form.get("name")
         conversation = create_conversation(
             user1_id=user1_id, user2_id=user2_id, name=name
         )

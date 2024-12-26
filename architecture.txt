@@ -2,9 +2,6 @@ messagely/
 │
 ├── backend/                        # Backend-related files
 │   ├── app/                        # FastAPI application
-│   │   ├── kafka/                  # kafka files
-│   │   │   ├── kafka_consumer.py          
-│   │   │   └── kafka_utils.py
 │   │   ├── models/                 # Database models (e.g., User, Message)
 │   │   │   ├── message.py          
 │   │   │   ├── groupchat.py        

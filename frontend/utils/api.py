@@ -114,10 +114,15 @@ def send_groupchat_message(groupchat_id, sender_id, content):
 
 def get_user_by_username(username):
     """Fetch a specific user by their username."""
-    response = requests.get(f"{BASE_URL}/users/{username}")
+    response = requests.get(f"{BASE_URL}/users/username/{username}")
     response.raise_for_status()
     return response.json()
 
+def get_user_by_id(user_id):
+    """Fetch a specific user by their id."""
+    response = requests.get(f"{BASE_URL}/users/id/{user_id}")
+    response.raise_for_status()
+    return response.json()
 
 def delete_conversation(conversation_id):
     """Delete a specific conversation."""

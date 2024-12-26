@@ -62,8 +62,6 @@ async def create_conversation(
     conversation_data: ConversationCreate, db: AsyncSession = Depends(get_db)
 ):
     """Create a new conversation."""
-    print(20 * ("__"))
-    print("creating conv with data", conversation_data)
     try:
         target_user = await db.execute(
             select(User).filter(User.id == conversation_data.user2_id)
@@ -107,8 +105,8 @@ async def create_conversation(
         user_ids=[new_conversation.user1_id, new_conversation.user2_id],
     )
 
-
-@router.get("/print_conversations")
+# for debug
+@router.get("/print_conversations") 
 async def print_conversations(db: AsyncSession = Depends(get_db)):
     try:
         # Fetch all conversations from the database

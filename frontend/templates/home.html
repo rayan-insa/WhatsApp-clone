@@ -53,4 +53,13 @@
     </div>
     {% endfor %}
 </div>
+<script>
+    // Check for flashed messages
+    const flashedMessage = "{{ get_flashed_messages()[0] if get_flashed_messages() else '' }}";
+    const messageType = "{{ 'success' if 'success' in get_flashed_messages(category_filter=['success']) else 'error' }}";
+
+    if (flashedMessage) {
+        alert(flashedMessage);
+    }
+</script>
 {% endblock %}
