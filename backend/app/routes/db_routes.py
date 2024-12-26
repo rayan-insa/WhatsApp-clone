@@ -87,18 +87,10 @@ async def add_test_data(db: AsyncSession = Depends(get_db)):
 
         # Create conversations
         conversations = [
-            Conversation(
-                name="Alice & Bob", user1_id=users[0].id, user2_id=users[1].id
-            ),
-            Conversation(
-                name="Charlie & Diana", user1_id=users[2].id, user2_id=users[3].id
-            ),
-            Conversation(
-                name="Fiona & George", user1_id=users[5].id, user2_id=users[6].id
-            ),
-            Conversation(
-                name="Hannah & Ivan", user1_id=users[7].id, user2_id=users[8].id
-            ),
+            Conversation(user1_id=users[0].id, user2_id=users[1].id),
+            Conversation(user1_id=users[2].id, user2_id=users[3].id),
+            Conversation(user1_id=users[5].id, user2_id=users[6].id),
+            Conversation(user1_id=users[7].id, user2_id=users[8].id),
         ]
 
         db.add_all(conversations)
@@ -176,7 +168,7 @@ async def add_test_data(db: AsyncSession = Depends(get_db)):
 
         for groupchat in groupchats:
             await db.refresh(groupchat)
-            
+
         for user in users:
             await db.refresh(user)
 

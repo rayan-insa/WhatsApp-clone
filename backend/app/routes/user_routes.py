@@ -57,6 +57,8 @@ async def signup(user: UserCreate, db: AsyncSession = Depends(get_db)):
 
 @router.post("/signin", response_model=UserResponse)
 async def signin(signin: UserSignIn, db: AsyncSession = Depends(get_db)):
+    print(20 * "*")
+    print("signin")
     result = await db.execute(select(User).where(User.username == signin.username))
     user = result.scalars().first()
     if not user:

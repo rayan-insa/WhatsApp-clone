@@ -1,3 +1,4 @@
+import json
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
@@ -8,6 +9,7 @@ from pydantic import BaseModel
 from typing import List
 from app.routes.websocket_routes import manager
 from app.models.user import User
+from app.models.conversation import Conversation
 
 
 class MessageCreate(BaseModel):
@@ -28,6 +30,7 @@ class MessageResponse(BaseModel):
     class Config:
         orm_mode = True
 
+
 router = APIRouter()
 
 
@@ -45,8 +48,13 @@ async def create_message(message: MessageCreate, db: AsyncSession = Depends(get_
     sender = await db.get(User, senderID)
     await db.refresh(sender)
 
-    # Broadcast a message to all connected WebSocket clients
-    await manager.broadcast("New message")
+    message_data = {
+        "chat_id": new_message.conversation_id,
+    }
+
+    message_json = json.dumps(message_data)
+
+    await manager.broadcast(message_json)
     
     return MessageResponse(
         id=new_message.id,
@@ -71,6 +79,14 @@ async def create_message(message: MessageCreate, db: AsyncSession = Depends(get_
     senderID = new_message.sender_id
     sender = await db.get(User, senderID)
     await db.refresh(sender)
+
+    message_data = {
+        "chat_id": new_message.groupchat_id,
+    }
+
+    message_json = json.dumps(message_data)
+
+    await manager.broadcast(message_json)
 
     return MessageResponse(
         id=new_message.id,
