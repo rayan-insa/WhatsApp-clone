@@ -7,16 +7,19 @@ messagely/
 │   │   │   ├── groupchat.py        
 │   │   │   ├── conversation.py     
 │   │   │   └── user.py             
-│   │   ├── routes/                 # API routes (endpoints)
-│   │   │   ├── conversation_routes.py          
-│   │   │   ├── groupchat_routes.py          
-│   │   │   ├── message.py          
-│   │   │   ├── user_routes.py          
-│   │   │   └── db_routes.py             
-│   │   └── database.py             # Configuration file for database
+│   │   └── routes/                 # API routes (endpoints)
+│   │       ├── conversation_routes.py          
+│   │       ├── groupchat_routes.py          
+│   │       ├── message.py          
+│   │       ├── user_routes.py          
+│   │       └── db_routes.py             
 │   ├── main.py                     # FastAPI entry point
 │   ├── requirements.txt            # Python dependencies                
 │   └── Dockerfile                  # Dockerfile to build the backend container
+├── db/                             # Database-related files
+│   ├── init.sql                    # FastAPI application
+│   ├── Dockerfile                  # Dockerfile to build the database container
+│   └── database.py                 # Configuration file for database
 │
 ├── frontend/                       # Frontend-related files
 │   ├── static/                     # Static files (CSS, JS)
