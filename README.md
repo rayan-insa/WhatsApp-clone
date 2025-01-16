@@ -2,6 +2,7 @@
 
 This is a distributed messaging web application built using Flask, FastAPI, MySQL, and WebSockets. The application allows users to sign in, sign up, create group chats, send and receive messages, and perform other actions concurrently with multiple users, leveraging WebSockets for real-time communication.
 
+Authors : Sami TAIDER and Rayan HANADER
 ---
 
 ## Features
